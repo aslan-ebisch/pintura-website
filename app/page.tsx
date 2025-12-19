@@ -498,19 +498,19 @@ function Gallery() {
 function Testimonials() {
   const testimonials = [
     {
-      quote: "[Testimonial from a happy customer goes here. Make it specific and authentic.]",
-      name: "Customer Name",
-      location: "Fayetteville, AR",
+      quote: "These guys showed up on time, worked hard, and my house looks amazing. You can tell they actually care about doing a good job.",
+      name: "Sarah M.",
+      location: "Springfield, MO",
     },
     {
-      quote: "[Another testimonial. Focus on what made the experience great - communication, quality, timeliness.]",
-      name: "Customer Name",
-      location: "Bentonville, AR",
+      quote: "Great communication from start to finish. The crew was professional and respectful of our property. Highly recommend!",
+      name: "Mike T.",
+      location: "Springfield, MO",
     },
     {
-      quote: "[Third testimonial. Show variety in your work - different neighborhoods, home styles, etc.]",
-      name: "Customer Name",
-      location: "Rogers, AR",
+      quote: "Loved supporting local students and the quality exceeded my expectations. Our neighbors have already asked for their number.",
+      name: "Jennifer R.",
+      location: "Springfield, MO",
     },
   ];
 
