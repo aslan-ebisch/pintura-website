@@ -422,6 +422,7 @@ function Gallery() {
     '/IMG_1260.JPEG',
     '/pic4.PNG',
     '/IMG_1355.JPG',
+    '/pic5.png',
   ];
 
   return (
