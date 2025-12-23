@@ -287,18 +287,18 @@ function About() {
 function Services() {
   const services = [
     {
-      title: 'Interior',
-      description: 'Walls, ceilings, trim, and doors. Clean lines, smooth finishes, and attention to detail in every room.',
+      title: 'Exterior',
+      description: 'Complete exterior transformations. Siding, trim, doors, shutters. Weather-resistant finishes that last.',
       icon: '01',
     },
     {
-      title: 'Exterior',
-      description: 'Complete exterior transformations. Siding, trim, doors, shutters. Weather-resistant finishes that last.',
+      title: 'Deck Finishing',
+      description: 'Decks, fences, and pergolas. Proper prep, premium stains, and lasting protection for your outdoor wood.',
       icon: '02',
     },
     {
-      title: 'Wood Staining',
-      description: 'Decks, fences, and pergolas. Proper prep, premium stains, and lasting protection for your outdoor wood.',
+      title: 'Interior',
+      description: 'Walls, ceilings, trim, and doors. Clean lines, smooth finishes, and attention to detail in every room.',
       icon: '03',
     },
     {
