@@ -418,7 +418,6 @@ function Gallery() {
     '/pic1.PNG',
     '/pic2.PNG',
     '/pic3.jpg',
-    '/IMG_1175.JPG',
     '/IMG_1260.JPEG',
     '/pic4.PNG',
     '/IMG_1164.JPG',
