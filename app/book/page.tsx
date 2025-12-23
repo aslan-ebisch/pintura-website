@@ -1,8 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
+
+// Cloud Function URL for availability check
+const AVAILABILITY_API = 'https://us-central1-javelin-63cd4.cloudfunctions.net/getAvailableSlots';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, Timestamp, getDoc, doc } from 'firebase/firestore';
 
@@ -75,13 +78,50 @@ export default function BookEstimate() {
     message: '',
   });
 
-  // TODO: Replace with actual availability check from Google Calendar
-  const unavailableSlots: string[] = []; // Format: "2024-12-28-10:00"
+  // Slot availability from Google Calendar
+  const [slotAvailability, setSlotAvailability] = useState<Record<string, boolean>>({});
+  const [loadingSlots, setLoadingSlots] = useState(false);
 
-  const isSlotAvailable = (date: Date, timeValue: string): boolean => {
-    const dateStr = date.toISOString().split('T')[0];
-    const slotKey = `${dateStr}-${timeValue}`;
-    return !unavailableSlots.includes(slotKey);
+  // Fetch availability when date is selected
+  useEffect(() => {
+    if (!selectedDate) {
+      setSlotAvailability({});
+      return;
+    }
+
+    const fetchAvailability = async () => {
+      setLoadingSlots(true);
+      try {
+        const dateStr = selectedDate.toISOString().split('T')[0];
+        const response = await fetch(`${AVAILABILITY_API}?date=${dateStr}`);
+        const data = await response.json();
+
+        // Convert slots array to availability map
+        const availability: Record<string, boolean> = {};
+        data.slots?.forEach((slot: { value: string; available: boolean }) => {
+          availability[slot.value] = slot.available;
+        });
+        setSlotAvailability(availability);
+      } catch (error) {
+        console.error('Error fetching availability:', error);
+        // Default all slots to available on error
+        const defaultAvailability: Record<string, boolean> = {};
+        TIME_SLOTS.forEach(slot => {
+          defaultAvailability[slot.value] = true;
+        });
+        setSlotAvailability(defaultAvailability);
+      } finally {
+        setLoadingSlots(false);
+      }
+    };
+
+    fetchAvailability();
+  }, [selectedDate]);
+
+  const isSlotAvailable = (timeValue: string): boolean => {
+    // If we haven't loaded availability yet, assume available
+    if (Object.keys(slotAvailability).length === 0) return true;
+    return slotAvailability[timeValue] ?? true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -253,29 +293,41 @@ export default function BookEstimate() {
                 )}
               </h2>
               <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
-                {TIME_SLOTS.map((slot) => {
-                  const available = selectedDate ? isSlotAvailable(selectedDate, slot.value) : true;
-                  return (
-                    <motion.button
+                {loadingSlots ? (
+                  // Loading skeleton
+                  TIME_SLOTS.map((slot) => (
+                    <div
                       key={slot.value}
-                      type="button"
-                      disabled={!available}
-                      onClick={() => setSelectedTime(slot.value)}
-                      className={`p-4 border-2 text-center transition-all ${
-                        !available
-                          ? 'border-gray-100 bg-gray-50 text-gray-300 cursor-not-allowed'
-                          : selectedTime === slot.value
-                          ? 'border-[#9D2235] bg-[#9D2235]/5'
-                          : 'border-gray-200 hover:border-gray-300'
-                      }`}
-                      whileHover={available ? { scale: 1.05 } : {}}
-                      whileTap={available ? { scale: 0.95 } : {}}
+                      className="p-4 border-2 border-gray-100 bg-gray-50 text-center animate-pulse"
                     >
-                      <div className="font-medium">{slot.time}</div>
-                      {!available && <div className="text-xs text-gray-400 mt-1">Booked</div>}
-                    </motion.button>
-                  );
-                })}
+                      <div className="h-5 bg-gray-200 rounded w-16 mx-auto"></div>
+                    </div>
+                  ))
+                ) : (
+                  TIME_SLOTS.map((slot) => {
+                    const available = isSlotAvailable(slot.value);
+                    return (
+                      <motion.button
+                        key={slot.value}
+                        type="button"
+                        disabled={!available}
+                        onClick={() => setSelectedTime(slot.value)}
+                        className={`p-4 border-2 text-center transition-all ${
+                          !available
+                            ? 'border-gray-100 bg-gray-50 text-gray-300 cursor-not-allowed'
+                            : selectedTime === slot.value
+                            ? 'border-[#9D2235] bg-[#9D2235]/5'
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                        whileHover={available ? { scale: 1.05 } : {}}
+                        whileTap={available ? { scale: 0.95 } : {}}
+                      >
+                        <div className="font-medium">{slot.time}</div>
+                        {!available && <div className="text-xs text-gray-400 mt-1">Booked</div>}
+                      </motion.button>
+                    );
+                  })
+                )}
               </div>
             </motion.div>
 
