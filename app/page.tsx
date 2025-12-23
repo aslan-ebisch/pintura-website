@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -62,14 +63,15 @@ function Navigation() {
           ))}
         </div>
 
-        <motion.a
-          href="#contact"
-          className="bg-[#9D2235] text-white px-6 py-2 text-sm font-medium hover:bg-[#7a1a2a] transition-colors"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Get Estimate
-        </motion.a>
+        <Link href="/book">
+          <motion.span
+            className="bg-[#9D2235] text-white px-6 py-2 text-sm font-medium hover:bg-[#7a1a2a] transition-colors inline-block"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Book Estimate
+          </motion.span>
+        </Link>
       </div>
     </motion.nav>
   );
@@ -145,14 +147,15 @@ function Hero() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <motion.a
-            href="#contact"
-            className="bg-[#9D2235] text-white px-8 py-4 text-sm font-medium tracking-wide hover:bg-[#7a1a2a] transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            REQUEST FREE ESTIMATE
-          </motion.a>
+          <Link href="/book">
+            <motion.span
+              className="bg-[#9D2235] text-white px-8 py-4 text-sm font-medium tracking-wide hover:bg-[#7a1a2a] transition-colors inline-block"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              REQUEST FREE ESTIMATE
+            </motion.span>
+          </Link>
           <motion.a
             href="#gallery"
             className="border border-black/30 text-black px-8 py-4 text-sm font-medium tracking-wide hover:bg-black/5 transition-colors"
