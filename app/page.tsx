@@ -415,12 +415,12 @@ function Gallery() {
 
   const projects = [
     '/IMG_1164.JPG',
-    '/IMG_1168.JPG',
-    '/IMG_1169.JPG',
-    '/IMG_1170.JPG',
+    '/pic1.PNG',
+    '/pic2.PNG',
+    '/pic3.jpg',
     '/IMG_1175.JPG',
     '/IMG_1260.JPEG',
-    '/IMG_1273.JPG',
+    '/pic4.PNG',
     '/IMG_1355.JPG',
   ];
 
