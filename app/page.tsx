@@ -411,7 +411,7 @@ function Process() {
 
 // Gallery Section
 function Gallery() {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const projects = [
     '/IMG_1355.JPG',
@@ -424,6 +424,20 @@ function Gallery() {
     '/IMG_1164.JPG',
     '/pic5.png',
   ];
+
+  const goToPrevious = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (selectedIndex !== null) {
+      setSelectedIndex(selectedIndex === 0 ? projects.length - 1 : selectedIndex - 1);
+    }
+  };
+
+  const goToNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (selectedIndex !== null) {
+      setSelectedIndex(selectedIndex === projects.length - 1 ? 0 : selectedIndex + 1);
+    }
+  };
 
   return (
     <>
@@ -452,7 +466,7 @@ function Gallery() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 viewport={{ once: true }}
-                onClick={() => setSelectedImage(project)}
+                onClick={() => setSelectedIndex(i)}
                 className="group relative aspect-[4/3] bg-gray-200 overflow-hidden cursor-pointer"
               >
                 <img
@@ -468,30 +482,58 @@ function Gallery() {
       </section>
 
       {/* Lightbox Modal */}
-      {selectedImage && (
+      {selectedIndex !== null && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-          onClick={() => setSelectedImage(null)}
+          onClick={() => setSelectedIndex(null)}
         >
+          {/* Close button */}
           <button
-            onClick={() => setSelectedImage(null)}
-            className="absolute top-6 right-6 text-white hover:text-[#9D2235] transition-colors"
+            onClick={() => setSelectedIndex(null)}
+            className="absolute top-6 right-6 text-white hover:text-[#9D2235] transition-colors z-10"
           >
             <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
+
+          {/* Previous arrow */}
+          <button
+            onClick={goToPrevious}
+            className="absolute left-4 md:left-8 text-white hover:text-[#9D2235] transition-colors z-10"
+          >
+            <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Next arrow */}
+          <button
+            onClick={goToNext}
+            className="absolute right-4 md:right-8 text-white hover:text-[#9D2235] transition-colors z-10"
+          >
+            <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
           <motion.img
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-            src={selectedImage}
+            key={selectedIndex}
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            src={projects[selectedIndex]}
             alt="Enlarged project photo"
             className="max-w-full max-h-[90vh] object-contain"
             onClick={(e) => e.stopPropagation()}
           />
+
+          {/* Image counter */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-sm">
+            {selectedIndex + 1} / {projects.length}
+          </div>
         </motion.div>
       )}
     </>
