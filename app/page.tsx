@@ -420,7 +420,7 @@ function Gallery() {
     '/pic3.jpg',
     '/IMG_1260.JPEG',
     '/pic4.PNG',
-    '/IMG_1164.JPG',
+    '/pic6.JPG',
     '/pic5.png',
   ];
 
