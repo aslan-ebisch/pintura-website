@@ -153,7 +153,7 @@ function Hero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              REQUEST FREE ESTIMATE
+              BOOK ESTIMATE
             </motion.span>
           </Link>
           <motion.a
