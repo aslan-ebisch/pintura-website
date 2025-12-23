@@ -233,7 +233,7 @@ export default function BookEstimate() {
               Book a Free Estimate
             </h1>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Select a Saturday that works for you. Our estimates take about 90 minutes,
+              Select a Saturday that works for you. Our estimates take about 30-45 minutes,
               and we&apos;ll provide a detailed quote on the spot.
             </p>
           </motion.div>
@@ -422,7 +422,7 @@ export default function BookEstimate() {
                   (Central Time)
                 </p>
                 <p className="text-sm text-gray-500 mt-2">
-                  Duration: ~90 minutes • We&apos;ll call you the day before to confirm
+                  Duration: ~30-45 minutes • We&apos;ll call you the day before to confirm
                 </p>
               </motion.div>
             )}
