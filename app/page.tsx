@@ -414,14 +414,14 @@ function Gallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const projects = [
-    '/IMG_1164.JPG',
+    '/IMG_1355.JPG',
     '/pic1.PNG',
     '/pic2.PNG',
     '/pic3.jpg',
     '/IMG_1175.JPG',
     '/IMG_1260.JPEG',
     '/pic4.PNG',
-    '/IMG_1355.JPG',
+    '/IMG_1164.JPG',
     '/pic5.png',
   ];
 
