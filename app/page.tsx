@@ -189,7 +189,7 @@ function Hero() {
 // Stats Section
 function Stats() {
   const stats = [
-    { value: '24', label: 'Homes Painted' },
+    { value: '25+', label: 'Homes Painted' },
     { value: '100%', label: 'Student-Powered' },
     { value: '24hr', label: 'Quote Response' },
   ];
