@@ -223,11 +223,25 @@ function Stats() {
 
 // About Section
 function About() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handlePlayClick = () => {
+    setIsPlaying(true);
+    setTimeout(() => {
+      videoRef.current?.play();
+    }, 100);
+  };
+
+  const handleVideoEnded = () => {
+    setIsPlaying(false);
+  };
+
   return (
     <section id="about" className="py-32">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-16 items-center">
-          {/* Image placeholder */}
+          {/* Video with thumbnail */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -236,12 +250,48 @@ function About() {
             className="relative"
           >
             <div className="aspect-[4/5] bg-gray-100 relative overflow-hidden">
-              <img
-                src="/founder.jpg"
-                alt="Aslan Ebisch - Founder of Pintura"
-                className="absolute inset-0 w-full h-full object-cover"
+              {/* Video element (hidden until playing) */}
+              <video
+                ref={videoRef}
+                src="/Aslan_Pentura_compressed.mp4"
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                  isPlaying ? 'opacity-100' : 'opacity-0'
+                }`}
+                controls={isPlaying}
+                playsInline
+                onEnded={handleVideoEnded}
               />
-              <div className="absolute inset-0 bg-gradient-to-br from-[#9D2235]/10 to-transparent" />
+
+              {/* Thumbnail with play button (hidden when playing) */}
+              <div
+                className={`absolute inset-0 transition-opacity duration-500 ${
+                  isPlaying ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                }`}
+              >
+                <img
+                  src="/HeadshotTall.jpg"
+                  alt="Aslan Ebisch - Founder of Pintura"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#9D2235]/10 to-transparent" />
+
+                {/* Play button overlay */}
+                <button
+                  onClick={handlePlayClick}
+                  className="absolute inset-0 flex items-center justify-center group cursor-pointer"
+                  aria-label="Play video"
+                >
+                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:bg-white">
+                    <svg
+                      className="w-8 h-8 md:w-10 md:h-10 text-[#9D2235] ml-1"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                </button>
+              </div>
             </div>
             <div className="absolute -bottom-6 -right-6 w-32 h-32 border-2 border-[#9D2235]" />
           </motion.div>
