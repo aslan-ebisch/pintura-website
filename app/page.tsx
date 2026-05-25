@@ -464,6 +464,14 @@ function Gallery() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const projects = [
+    '/IMG_2157.jpg',
+    '/IMG_2189.jpg',
+    '/IMG_2190.jpg',
+    '/IMG_2193.jpg',
+    '/IMG_2229.jpg',
+    '/IMG_2231.jpg',
+    '/IMG_2260.jpg',
+    '/IMG_2261.jpg',
     '/IMG_1355.JPG',
     '/pic1.PNG',
     '/pic2.PNG',
@@ -527,6 +535,16 @@ function Gallery() {
               </motion.div>
             ))}
           </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center text-gray-500 text-sm font-medium tracking-[0.3em] uppercase mt-16"
+          >
+            More coming soon
+          </motion.p>
         </div>
       </section>
 
